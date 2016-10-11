@@ -43,3 +43,19 @@ dt2 <- dt1 %>% separate(Apygarda, c("Apygarda", "Numeris"),sep="[(]")  %>%
     mutate(Apygarda = str_trim(Apygarda))
 
 dt2 %>% write.csv2(file="csv_data/Apygardu_rinkimu_rezultatai.csv", row.names= FALSE)
+
+
+get_apyl_link <- function(x) {
+    tbs <- x %>% html_nodes("table")
+    tbs[[3]] %>% html_nodes("a") %>% html_attrs() %>%  
+        lapply(function(x) {
+        names(x) <-NULL
+        paste0(link_pref,x)
+    }) %>% do.call("c",.)
+}
+
+apyll <- apygf %>% lapply(function(x)get_apyl_link(read_html(x, encoding="utf-8"))) %>% 
+    do.call("c",.)
+
+writeLines(apyll,"link_data/apylinkiu_linkai.txt")
+

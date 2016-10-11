@@ -1,0 +1,79 @@
+---
+title: "2016 Seimo rinkimo antro turo analizė"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+Šitame dokumente bus trumpai aprašyti kas gali įvykti antrame ture. Natūralu kad analizėje gali būti nemažai klaidų. Norintys patikrinti galite viską pasileisti pas save.
+
+
+Visų pirma yra 3 kandidatai,
+kuriems jau nebereikės dalyvauti rinkimuose:
+
+```{r echo = FALSE, results = 'asis'}
+suppressMessages(library(dplyr))
+suppressMessages(library(knitr))
+dt <- read.csv2("csv_data/Apygardu_rinkimu_rezultatai.csv",check.names = FALSE, stringsAsFactors = FALSE)
+pr <- dt %>% group_by(Apygarda) %>% filter(min_rank(desc(`iš viso`))<=2) %>% ungroup
+colnames(pr) <- c("kandidatas","partija","apylinkes","pastas","balsai","proc_galiojantis","proc_rinkejai","apygarda","apygardos_nr")
+pnames <- read.csv2("csv_data/partiju_santrumpos.csv", stringsAsFactors = FALSE)
+pr <- pr %>% inner_join(pnames, by = "partija") %>% select(-partija) %>% rename(partija=partija1)
+jau <- pr %>% filter(proc_rinkejai > 50) 
+pr1 <- pr %>% filter(!(apygardos_nr %in% jau$apygardos_nr))
+jau %>% select(kandidatas, partija, proc_rinkejai, apygarda) %>% kable
+
+```
+
+Likusiose apygardose pirmaujantys kandidatai pagal partijas yra pasiskirstę taip: 
+```{r echo=FALSE, results="asis"}
+po_viena <- pr1 %>% group_by(apygarda) %>% filter(min_rank(desc(proc_rinkejai))<=1) %>% ungroup %>% group_by(partija) %>% summarize(viso_apygardu =n(), proc_rinkejai_mediana = median(proc_rinkejai)) %>% arrange(-viso_apygardu) 
+po_viena %>% kable
+```
+Matome kad valstiečiai kartu su konservatoriais lyderiauja vienodame skaičiuje apygardų, bet vidutiniškai yra surinkę ne per daugiausiai balsų. Kas įdomu, kad tvarkiečių persvara laimėtose apygardose yra kur kas didesnė. Pasižiūrim kas tai per apygardos ir kas jų konkurentai:
+```{r echo = FALSE, results = 'asis'}
+ptt <- pr1 %>% group_by(apygarda) %>% filter(min_rank(desc(proc_rinkejai))<=1) %>% filter(partija == "PTT")
+pr %>% filter(apygarda %in% ptt$apygarda) %>% select(kandidatas,partija,proc_rinkejai,apygarda) %>%  kable
+```
+Žemaitijoje ir Visagine tvarkiečiai pirmauja stipriai, Gargžduose neypatingai, o Mažeikiuose matosi bus įdomi kova.
+
+Dabar pasižiūrėsime kokios dažniausios yra partijų poros apygardose. Čia matome poras surikiuotas pagal pirmumą, ty pirma partija poroje yra ta kurios kandidatas apygardoje pirmauja. Vėl įdomumo dėlei suskaičiuojame medianą:
+```{r echo = FALSE, results = 'asis'}
+suppressMessages(library(tidyr))
+duo <- pr %>% select(apygardos_nr,partija,proc_rinkejai) %>% group_by(apygardos_nr) %>% summarize(duetas = paste(partija, collapse="-"), skirtumas = -diff(proc_rinkejai))
+
+duo1<-duo %>% group_by(duetas) %>% summarize(viso_apygardu=n(), skirtumo_mediana = median(skirtumas)) %>% arrange(-viso_apygardu) 
+
+duo1 %>% kable
+```
+
+Jeigu domina tik poros ir nedomina eiliškumas tai vaizdas yra toks:
+```{r echo = FALSE, results = 'asis'}
+duos <- pr %>% select(apygardos_nr,partija,proc_rinkejai) %>% arrange(apygardos_nr, partija) %>% group_by(apygardos_nr) %>% summarize(duetas = paste(partija, collapse="-"), skirtumas = -diff(proc_rinkejai))
+
+duos1<-duos %>% group_by(duetas) %>% summarize(viso_apygardu=n(), skirtumo_mediana = median(skirtumas)) %>% arrange(-viso_apygardu) 
+
+duos1 %>% kable
+```
+Jeigu skirtumas neigiamas, tai reiškia, kad vidutiniškai pirmas poros narys pralaimi, jeigu teigiamas atvirkščiai.
+
+Taip peržiūrėjus poras galima padaryti dvi grubias prognozes kiek mandatų laimės partijos antrame ture. Pirma prognozė duoda pergalę tam kandidatui, kuris laimėjo savo apygardą:
+```{r echo = FALSE, results = 'asis'}
+lm1<-duo1 %>% separate("duetas",c("laimejo","pralaimejo"),sep = "-") %>% group_by(laimejo) %>%
+    summarise(viso_apygardu = sum(viso_apygardu)) %>% arrange(-viso_apygardu)
+lm1 %>% kable
+```
+
+Antra prognozė duoda pergalę tam kandidatui kurio partija turi vidutinišką pranašumą per apygardas ("bendras laimėtojo efektas").
+```{r echo = FALSE, results = 'asis'}
+lms1<-duos1 %>% separate("duetas",c("pirmas","antras"),sep = "-") %>% 
+    mutate(laimejo = ifelse(skirtumo_mediana>0, pirmas, antras)) %>% 
+    group_by(laimejo) %>%
+    summarise(viso_apygardu = sum(viso_apygardu)) %>% arrange(-viso_apygardu)
+lms1 %>% kable
+```
+
+Kaip matome antra prognozė ženkliai palankesnė konservatoriams ir tiesiog žudanti socdemams. Renkuosi antrą :)
+
+
+
