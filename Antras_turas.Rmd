@@ -5,7 +5,7 @@ output:
   html_notebook: default
 ---
 
-Šitame dokumente bus trumpai aprašyti kas gali įvykti antrame ture. Natūralu kad analizėje gali būti nemažai klaidų. Norintys patikrinti galite viską pasileisti pas save.
+Šitame dokumente bus trumpai aprašyti kas gali įvykti antrame ture. Natūralu kad analizėje gali būti nemažai klaidų. Norintys patikrinti galite viską pasileisti pas save. Šitas dokumentą kaip R Notebook galite parsisiųsti iš https://github.com/mpiktas/vrk_seimas_2016
 
 
 Visų pirma yra 3 kandidatai,
