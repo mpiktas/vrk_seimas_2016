@@ -1,0 +1,89 @@
+---
+title: "2016 Seimo rinkimo antro turo analizė II"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+Šitam dokumente pabandysim pateikti "dvaro politologo" Mažvydo Jastramskio prognozę 
+antram turui. 
+
+Mažvydas Jastramskis sako, kad antrą turą paprastai laimi laimėtojai. Nebent 
+skirtumas yra mažas ir antros vietos laimėtojo partijai nemažai surinko balsų daugiamandatėje apygardoje. 
+
+Taigi visų pirma identifikuokim kas yra mažas skirtumas tarp kandidatų. Mažvydas siūlo imti pirmą kvartilį. Visų pirma pasižiūrėkim kaip apskritai atrodo skirtumai:
+
+```{r echo = FALSE, results = 'asis'}
+suppressMessages(library(dplyr))
+suppressMessages(library(knitr))
+dt <- read.csv2("csv_data/Apygardu_rinkimu_rezultatai.csv",check.names = FALSE, stringsAsFactors = FALSE)
+pr <- dt %>% group_by(Apygarda) %>% filter(min_rank(desc(`iš viso`))<=2) %>% ungroup
+colnames(pr) <- c("kandidatas","partija","apylinkes","pastas","balsai","proc_galiojantis","proc_rinkejai","apygarda","apygardos_nr")
+pnames <- read.csv2("csv_data/partiju_santrumpos.csv", stringsAsFactors = FALSE)
+pr <- pr %>% inner_join(pnames, by = "partija") %>% select(-partija) %>% rename(partija=partija1)
+jau <- pr %>% filter(proc_rinkejai > 50) 
+pr1 <- pr %>% filter(!(apygardos_nr %in% jau$apygardos_nr))
+
+
+duo <- pr %>% select(apygardos_nr,partija,proc_rinkejai) %>% group_by(apygardos_nr) %>% summarize(duetas = paste(partija, collapse="-"), skirtumas = -diff(proc_rinkejai))
+
+hist(duo$skirtumas, main = "Skirtumų histograma", xlab = "")
+
+
+```
+
+Matome, kad virš 40% apygardų skirtumas yra mažesnis nei 10%. Skirtmų kvartiliai atrodo taip
+
+```{r}
+quantile(duo$skirtumas, prob=c(0,0.25,0.5,0.75,1))
+```
+
+Taigi imsime tas apygardas tarp kurių skirtumas yra mažesnis už 2%.
+
+```{r echo = FALSE, results = 'asis'}
+sel <- duo %>% filter(skirtumas<2) %>% arrange(skirtumas) 
+pr2 <- pr1 %>% filter(apygardos_nr %in% sel$apygardos_nr) %>% 
+    select(apygarda,kandidatas, partija, proc_rinkejai)  
+pr2 %>% kable
+```
+
+Kaip matome skirtumai tikrai nėra dideli. Prijungiam duomenis iš daugiamandačių imdami tik tas partijas, kurių kandidatai praėjo į antrą turą.
+
+```{r echo = FALSE, results = 'asis'}
+dm <- read.csv2("csv_data/daugiamandaciu_apygardu_rinkimu_rezultatai.csv", stringsAsFactors = FALSE)
+dm3 <- dm %>% filter(apygardos_no %in% sel$apygardos_nr)%>% inner_join(pr2 %>% select(apygarda,partija,kandidatas, kandidato_proc=proc_rinkejai),by=c("apygarda","partija")) %>% 
+    select(apygardos_no,apygarda,partija, proc_rinkejai,kandidato_proc, kandidatas)
+dm3 %>% kable
+```
+Matome, kad yra apygardų, kuriose praėjo save iškėlęs kandidatas, taigi turime jas išmesti iš analizės.
+```{r echo = FALSE, results = 'asis'}
+rem <- dm3 %>% group_by(apygardos_no,apygarda) %>% summarize(n=n()) %>% filter(n==1) 
+rem %>% kable
+```
+
+Suskaičiuojame skirtumus. 
+```{r echo = FALSE, results = 'asis'}
+dm4 <- dm3 %>% filter(!(apygardos_no %in% rem$apygardos_no))
+duod <- dm4 %>% arrange(apygardos_no, -kandidato_proc) %>%  group_by(apygardos_no,apygarda) %>% summarize(duetas = paste(partija, collapse="-"), dm_skirtumas = -diff(proc_rinkejai), vm_skirtumas = -diff(kandidato_proc))
+duod %>% kable
+```
+Matome atsiranda įdomybių. Pvz Radviliškyje konservatorių kandidatas vienmandatėje pralaimėjo tik 1%, bet daugiamandatėje konservatoriai valstiečiams nusileido net 11%.  Biržuose socialdemokratų kandidatas buvo pirmas vienmandatėje, bet socialdemokratai net 9 procentais nusileido jo konkurento partijai daugiamandatėje.
+
+Priskiriam pergalę tam kandidatui, kurio vienmandatėje buvo antras, bet jo partija surinko daugiau balsų daugiamandatėje, priešingu atveju paliekam pergalę vienmandatę laimėjusiam kandidatui
+```{r echo = FALSE, results = 'asis'}
+suppressMessages(library(tidyr))
+lm3<- duod %>% separate("duetas",c("pirmas","antras"),sep = "-") %>% 
+    mutate(laimejo = ifelse(dm_skirtumas<0,antras,pirmas))
+lm3 %>% kable
+```
+
+Dabar belieka sujungti šituos duomenis su likusiom kitom apygardom, ir suvesti rezultatus
+```{r echo = FALSE, results = 'asis'}
+lmf <-duo %>% separate("duetas",c("laimejo","pralaimejo"),sep = "-")
+lmf1 <- lmf %>% filter(!(apygardos_nr %in% lm3$apygardos_no)) %>% select(-pralaimejo)
+lm4 <- lmf1 %>% bind_rows(lm3 %>%
+                              select(apygardos_nr=apygardos_no,laimejo,skirtumas=vm_skirtumas))
+lm5 <- lm4 %>% group_by(laimejo) %>% summarize(mandatai=n()) %>% arrange(-mandatai)
+                          
+lm5 %>% kable                         
+```
