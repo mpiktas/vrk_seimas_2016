@@ -146,38 +146,566 @@ $(document).ready(function () {
 <p>Visų pirma yra 3 kandidatai, kuriems jau nebereikės dalyvauti rinkimuose:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">kandidatas</th>
+<th align="left">partija</th>
+<th align="right">proc_rinkejai</th>
+<th align="left">apygarda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">INGRIDA ŠIMONYTĖ</td>
+<td align="left">TSLKD</td>
+<td align="right">51.54</td>
+<td align="left">Antakalnio</td>
+</tr>
+<tr class="even">
+<td align="left">LEONARD TALMONT</td>
+<td align="left">LLRA</td>
+<td align="right">64.43</td>
+<td align="left">Šalčininkų-Vilniaus</td>
+</tr>
+<tr class="odd">
+<td align="left">ČESLAV OLŠEVSKI</td>
+<td align="left">LLRA</td>
+<td align="right">57.31</td>
+<td align="left">Medininkų</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Likusiose apygardose pirmaujantys kandidatai pagal partijas yra pasiskirstę taip:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">partija</th>
+<th align="right">viso_apygardu</th>
+<th align="right">proc_rinkejai_mediana</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LVZS</td>
+<td align="right">21</td>
+<td align="right">27.550</td>
+</tr>
+<tr class="even">
+<td align="left">TSLKD</td>
+<td align="right">21</td>
+<td align="right">26.050</td>
+</tr>
+<tr class="odd">
+<td align="left">LSDP</td>
+<td align="right">10</td>
+<td align="right">25.700</td>
+</tr>
+<tr class="even">
+<td align="left">LRLS</td>
+<td align="right">4</td>
+<td align="right">21.060</td>
+</tr>
+<tr class="odd">
+<td align="left">PTT</td>
+<td align="right">4</td>
+<td align="right">34.150</td>
+</tr>
+<tr class="even">
+<td align="left">DP</td>
+<td align="right">3</td>
+<td align="right">25.490</td>
+</tr>
+<tr class="odd">
+<td align="left">SI</td>
+<td align="right">2</td>
+<td align="right">35.515</td>
+</tr>
+<tr class="even">
+<td align="left">LLRA</td>
+<td align="right">1</td>
+<td align="right">44.140</td>
+</tr>
+<tr class="odd">
+<td align="left">LS</td>
+<td align="right">1</td>
+<td align="right">22.330</td>
+</tr>
+<tr class="even">
+<td align="left">PUTKA</td>
+<td align="right">1</td>
+<td align="right">24.260</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Matome kad valstiečiai kartu su konservatoriais lyderiauja vienodame skaičiuje apygardų, bet vidutiniškai yra surinkę ne per daugiausiai balsų. Kas įdomu, kad tvarkiečių persvara laimėtose apygardose yra kur kas didesnė. Pasižiūrim kas tai per apygardos ir kas jų konkurentai:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">kandidatas</th>
+<th align="left">partija</th>
+<th align="right">proc_rinkejai</th>
+<th align="left">apygarda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">PETRAS GRAŽULIS</td>
+<td align="left">PTT</td>
+<td align="right">30.27</td>
+<td align="left">Gargždų</td>
+</tr>
+<tr class="even">
+<td align="left">BRONIUS MARKAUSKAS</td>
+<td align="left">LVZS</td>
+<td align="right">20.89</td>
+<td align="left">Gargždų</td>
+</tr>
+<tr class="odd">
+<td align="left">REMIGIJUS ŽEMAITAITIS</td>
+<td align="left">PTT</td>
+<td align="right">38.03</td>
+<td align="left">Pietų Žemaitijos</td>
+</tr>
+<tr class="even">
+<td align="left">STASYS ŠEDBARAS</td>
+<td align="left">TSLKD</td>
+<td align="right">17.14</td>
+<td align="left">Pietų Žemaitijos</td>
+</tr>
+<tr class="odd">
+<td align="left">KĘSTUTIS BARTKEVIČIUS</td>
+<td align="left">PTT</td>
+<td align="right">25.51</td>
+<td align="left">Mažeikių</td>
+</tr>
+<tr class="even">
+<td align="left">LINA RIMKIENĖ</td>
+<td align="left">TSLKD</td>
+<td align="right">25.47</td>
+<td align="left">Mažeikių</td>
+</tr>
+<tr class="odd">
+<td align="left">ALGIMANTAS DUMBRAVA</td>
+<td align="left">PTT</td>
+<td align="right">38.42</td>
+<td align="left">Visagino-Zarasų</td>
+</tr>
+<tr class="even">
+<td align="left">OLGA PODOLSKIENĖ</td>
+<td align="left">DP</td>
+<td align="right">10.92</td>
+<td align="left">Visagino-Zarasų</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Žemaitijoje ir Visagine tvarkiečiai pirmauja stipriai, Gargžduose neypatingai, o Mažeikiuose matosi bus įdomi kova.</p>
 <p>Dabar pasižiūrėsime kokios dažniausios yra partijų poros apygardose. Čia matome poras surikiuotas pagal pirmumą, ty pirma partija poroje yra ta kurios kandidatas apygardoje pirmauja. Vėl įdomumo dėlei suskaičiuojame medianą:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">duetas</th>
+<th align="right">viso_apygardu</th>
+<th align="right">skirtumo_mediana</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LVZS-TSLKD</td>
+<td align="right">10</td>
+<td align="right">3.890</td>
+</tr>
+<tr class="even">
+<td align="left">TSLKD-LVZS</td>
+<td align="right">10</td>
+<td align="right">5.455</td>
+</tr>
+<tr class="odd">
+<td align="left">LVZS-LSDP</td>
+<td align="right">9</td>
+<td align="right">9.570</td>
+</tr>
+<tr class="even">
+<td align="left">LSDP-LVZS</td>
+<td align="right">6</td>
+<td align="right">11.755</td>
+</tr>
+<tr class="odd">
+<td align="left">TSLKD-LRLS</td>
+<td align="right">5</td>
+<td align="right">14.920</td>
+</tr>
+<tr class="even">
+<td align="left">TSLKD-LSDP</td>
+<td align="right">3</td>
+<td align="right">8.560</td>
+</tr>
+<tr class="odd">
+<td align="left">LLRA-TSLKD</td>
+<td align="right">2</td>
+<td align="right">37.210</td>
+</tr>
+<tr class="even">
+<td align="left">LRLS-TSLKD</td>
+<td align="right">2</td>
+<td align="right">0.285</td>
+</tr>
+<tr class="odd">
+<td align="left">LSDP-TSLKD</td>
+<td align="right">2</td>
+<td align="right">2.535</td>
+</tr>
+<tr class="even">
+<td align="left">PTT-TSLKD</td>
+<td align="right">2</td>
+<td align="right">10.465</td>
+</tr>
+<tr class="odd">
+<td align="left">SI-TSLKD</td>
+<td align="right">2</td>
+<td align="right">15.555</td>
+</tr>
+<tr class="even">
+<td align="left">DP-LVZS</td>
+<td align="right">1</td>
+<td align="right">18.240</td>
+</tr>
+<tr class="odd">
+<td align="left">DP-SI</td>
+<td align="right">1</td>
+<td align="right">5.140</td>
+</tr>
+<tr class="even">
+<td align="left">DP-TSLKD</td>
+<td align="right">1</td>
+<td align="right">1.920</td>
+</tr>
+<tr class="odd">
+<td align="left">LLRA-DP</td>
+<td align="right">1</td>
+<td align="right">57.760</td>
+</tr>
+<tr class="even">
+<td align="left">LRLS-DP</td>
+<td align="right">1</td>
+<td align="right">0.360</td>
+</tr>
+<tr class="odd">
+<td align="left">LRLS-LVZS</td>
+<td align="right">1</td>
+<td align="right">18.270</td>
+</tr>
+<tr class="even">
+<td align="left">LS-TSLKD</td>
+<td align="right">1</td>
+<td align="right">2.170</td>
+</tr>
+<tr class="odd">
+<td align="left">LSDP-LRLS</td>
+<td align="right">1</td>
+<td align="right">8.100</td>
+</tr>
+<tr class="even">
+<td align="left">LSDP-SI</td>
+<td align="right">1</td>
+<td align="right">1.550</td>
+</tr>
+<tr class="odd">
+<td align="left">LVZS-LLS</td>
+<td align="right">1</td>
+<td align="right">14.000</td>
+</tr>
+<tr class="even">
+<td align="left">LVZS-LRLS</td>
+<td align="right">1</td>
+<td align="right">1.590</td>
+</tr>
+<tr class="odd">
+<td align="left">PTT-DP</td>
+<td align="right">1</td>
+<td align="right">27.500</td>
+</tr>
+<tr class="even">
+<td align="left">PTT-LVZS</td>
+<td align="right">1</td>
+<td align="right">9.380</td>
+</tr>
+<tr class="odd">
+<td align="left">PUTKA-LRLS</td>
+<td align="right">1</td>
+<td align="right">1.160</td>
+</tr>
+<tr class="even">
+<td align="left">TSLKD-LLRA</td>
+<td align="right">1</td>
+<td align="right">10.910</td>
+</tr>
+<tr class="odd">
+<td align="left">TSLKD-LLS</td>
+<td align="right">1</td>
+<td align="right">18.370</td>
+</tr>
+<tr class="even">
+<td align="left">TSLKD-LZS</td>
+<td align="right">1</td>
+<td align="right">3.150</td>
+</tr>
+<tr class="odd">
+<td align="left">TSLKD-SI</td>
+<td align="right">1</td>
+<td align="right">3.880</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Jeigu domina tik poros ir nedomina eiliškumas tai vaizdas yra toks:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">duetas</th>
+<th align="right">viso_apygardu</th>
+<th align="right">skirtumo_mediana</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LVZS-TSLKD</td>
+<td align="right">20</td>
+<td align="right">-0.155</td>
+</tr>
+<tr class="even">
+<td align="left">LSDP-LVZS</td>
+<td align="right">15</td>
+<td align="right">-2.990</td>
+</tr>
+<tr class="odd">
+<td align="left">LRLS-TSLKD</td>
+<td align="right">7</td>
+<td align="right">-10.390</td>
+</tr>
+<tr class="even">
+<td align="left">LSDP-TSLKD</td>
+<td align="right">5</td>
+<td align="right">-2.190</td>
+</tr>
+<tr class="odd">
+<td align="left">LLRA-TSLKD</td>
+<td align="right">3</td>
+<td align="right">25.570</td>
+</tr>
+<tr class="even">
+<td align="left">SI-TSLKD</td>
+<td align="right">3</td>
+<td align="right">0.090</td>
+</tr>
+<tr class="odd">
+<td align="left">LRLS-LVZS</td>
+<td align="right">2</td>
+<td align="right">8.340</td>
+</tr>
+<tr class="even">
+<td align="left">PTT-TSLKD</td>
+<td align="right">2</td>
+<td align="right">10.465</td>
+</tr>
+<tr class="odd">
+<td align="left">DP-LLRA</td>
+<td align="right">1</td>
+<td align="right">-57.760</td>
+</tr>
+<tr class="even">
+<td align="left">DP-LRLS</td>
+<td align="right">1</td>
+<td align="right">-0.360</td>
+</tr>
+<tr class="odd">
+<td align="left">DP-LVZS</td>
+<td align="right">1</td>
+<td align="right">18.240</td>
+</tr>
+<tr class="even">
+<td align="left">DP-PTT</td>
+<td align="right">1</td>
+<td align="right">-27.500</td>
+</tr>
+<tr class="odd">
+<td align="left">DP-SI</td>
+<td align="right">1</td>
+<td align="right">5.140</td>
+</tr>
+<tr class="even">
+<td align="left">DP-TSLKD</td>
+<td align="right">1</td>
+<td align="right">1.920</td>
+</tr>
+<tr class="odd">
+<td align="left">LLS-LVZS</td>
+<td align="right">1</td>
+<td align="right">-14.000</td>
+</tr>
+<tr class="even">
+<td align="left">LLS-TSLKD</td>
+<td align="right">1</td>
+<td align="right">-18.370</td>
+</tr>
+<tr class="odd">
+<td align="left">LRLS-LSDP</td>
+<td align="right">1</td>
+<td align="right">-8.100</td>
+</tr>
+<tr class="even">
+<td align="left">LRLS-PUTKA</td>
+<td align="right">1</td>
+<td align="right">-1.160</td>
+</tr>
+<tr class="odd">
+<td align="left">LS-TSLKD</td>
+<td align="right">1</td>
+<td align="right">2.170</td>
+</tr>
+<tr class="even">
+<td align="left">LSDP-SI</td>
+<td align="right">1</td>
+<td align="right">1.550</td>
+</tr>
+<tr class="odd">
+<td align="left">LVZS-PTT</td>
+<td align="right">1</td>
+<td align="right">-9.380</td>
+</tr>
+<tr class="even">
+<td align="left">LZS-TSLKD</td>
+<td align="right">1</td>
+<td align="right">-3.150</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Jeigu skirtumas neigiamas, tai reiškia, kad vidutiniškai pirmas poros narys pralaimi, jeigu teigiamas atvirkščiai.</p>
 <p>Taip peržiūrėjus poras galima padaryti dvi grubias prognozes kiek mandatų laimės partijos antrame ture. Pirma prognozė duoda pergalę tam kandidatui, kuris laimėjo savo apygardą:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">laimejo</th>
+<th align="right">viso_apygardu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TSLKD</td>
+<td align="right">22</td>
+</tr>
+<tr class="even">
+<td align="left">LVZS</td>
+<td align="right">21</td>
+</tr>
+<tr class="odd">
+<td align="left">LSDP</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">LRLS</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">PTT</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">DP</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">LLRA</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">SI</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">LS</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">PUTKA</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Antra prognozė duoda pergalę tam kandidatui kurio partija turi vidutinišką pranašumą per apygardas (“bendras laimėtojo efektas”).</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">laimejo</th>
+<th align="right">viso_apygardu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TSLKD</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="left">LVZS</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">LLRA</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">PTT</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">DP</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">LRLS</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">SI</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">LSDP</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">LS</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">PUTKA</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Kaip matome antra prognozė ženkliai palankesnė konservatoriams ir tiesiog žudanti socdemams. Renkuosi antrą :)</p>
