@@ -2,6 +2,10 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 
+
+# Vienmandačių apygardų rezultatai ----------------------------------------
+
+
 apygf <- dir("html_data/apygardos",full.names=TRUE)
 
 
@@ -46,6 +50,9 @@ dt2 <- dt1 %>% separate(Apygarda, c("Apygarda", "Numeris"),sep="[(]")  %>%
 dt2 %>% write.csv2(file="csv_data/Apygardu_rinkimu_rezultatai.csv", row.names= FALSE)
 
 
+# Vienmandačių apylinkių linkai -------------------------------------------
+
+
 get_apyl_link <- function(x) {
     tbs <- x %>% html_nodes("table")
     tbs[[3]] %>% html_nodes("a") %>% html_attrs() %>%  
@@ -60,9 +67,9 @@ apyll <- apygf %>% lapply(function(x)get_apyl_link(read_html(x, encoding="utf-8"
 
 writeLines(apyll,"link_data/apylinkiu_linkai.txt")
 
-dmapygf <- dir("html_data/dm_apygardos",full.names=TRUE)
+# Daugiamandatės apygardos ------------------------------------------------
 
-ff <- read_html(dmapygf[1], encoding = "utf-8")
+dmapygf <- dir("html_data/dm_apygardos",full.names=TRUE)
 
 dmvapy <- dmapygf %>% lapply(get_data, atag="h2") 
 
@@ -75,6 +82,7 @@ format_dm_main_table <- function(x,rem=3) {
 combine_dm_info <- function(x) {
     format_dm_main_table(x$Balsai) %>% mutate(Apygarda = x[["apygarda"]])
 }
+
 
 dtdmapy <- dmvapy %>% lapply(combine_dm_info) %>% bind_rows
 
@@ -91,7 +99,7 @@ dm2 <- dm1 %>% separate(apygarda, c("apygarda", "Numeris"),sep="[(]")  %>%
     inner_join(pnames2 %>% select(partijos_no,partija1), by = "partijos_no") %>% 
     rename(partija_full = partija) %>% rename(partija = partija1)
 
-    
 
 dm2 %>% write.csv2(file="csv_data/daugiamandaciu_apygardu_rinkimu_rezultatai.csv", row.names= FALSE)
+
 
