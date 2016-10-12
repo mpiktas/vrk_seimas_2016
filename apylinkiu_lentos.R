@@ -52,7 +52,7 @@ apyl_tb1 <- apyl_tb %>% filter(kandidatas != "") %>%
     mutate(apygarda = str_trim(apygarda)) %>% 
     mutate(apylinke = str_trim(apylinke))
 
-apyl_tb1 %>% write.csv2("csv_data/")
+apyl_tb1 %>% write.csv2("csv_data/vienmandaciu_apylinkiu_rinkimu_rezultatai.csv", row.names = FALSE)
 # apyl_tb2 <- apyl_tb1 %>% 
 #     inner_join(pnames2 %>% select(partija,partija1), by = "partija") %>% 
 #     rename(partija_full = partija) %>% rename(partija = partija1)
