@@ -6,7 +6,7 @@ Iš VRK nuscrapinti duomenys. Vienmandačių ir daugiamandačių apygardų rezul
   
   2. Daugiamandatės apygardos, [rinkimų rezultatai](http://https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/csv_data/daugiamandaciu_apygardu_rinkimu_rezultatai.csv)
 
-  3. [R Notebook failas](https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/Antras_turas.Rmd) su vienmandačių antro turo prognozėm. (Jo html variantas)[https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/Antras_turas.nb.html] (reikia parsisiųsti ir atsidaryti su interneto naršykle) 
+  3. [R Notebook failas](https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/Antras_turas.Rmd) su vienmandačių antro turo prognozėm. [Jo html variantas](https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/Antras_turas.nb.html) (reikia parsisiųsti ir atsidaryti su interneto naršykle) 
 
   4. [R Notebook failas](https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/antras_turas_dp.Rmd) su alternatyvia antro turų vienmandačių prognoze. [Jo html variantas](https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/antras_turas_dp.nb.html).
 
