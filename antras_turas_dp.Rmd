@@ -34,7 +34,7 @@ hist(duo$skirtumas, main = "Skirtumų histograma", xlab = "")
 
 Matome, kad virš 40% apygardų skirtumas yra mažesnis nei 10%. Skirtmų kvartiliai atrodo taip
 
-```{r}
+```{r echo = FALSE, results = 'asis'}
 quantile(duo$skirtumas, prob=c(0,0.25,0.5,0.75,1))
 ```
 
@@ -55,6 +55,7 @@ dm3 <- dm %>% filter(apygardos_no %in% sel$apygardos_nr)%>% inner_join(pr2 %>% s
     select(apygardos_no,apygarda,partija, proc_rinkejai,kandidato_proc, kandidatas)
 dm3 %>% kable
 ```
+
 Matome, kad yra apygardų, kuriose praėjo save iškėlęs kandidatas, taigi turime jas išmesti iš analizės.
 ```{r echo = FALSE, results = 'asis'}
 rem <- dm3 %>% group_by(apygardos_no,apygarda) %>% summarize(n=n()) %>% filter(n==1) 
@@ -67,23 +68,46 @@ dm4 <- dm3 %>% filter(!(apygardos_no %in% rem$apygardos_no))
 duod <- dm4 %>% arrange(apygardos_no, -kandidato_proc) %>%  group_by(apygardos_no,apygarda) %>% summarize(duetas = paste(partija, collapse="-"), dm_skirtumas = -diff(proc_rinkejai), vm_skirtumas = -diff(kandidato_proc))
 duod %>% kable
 ```
+
 Matome atsiranda įdomybių. Pvz Radviliškyje konservatorių kandidatas vienmandatėje pralaimėjo tik 1%, bet daugiamandatėje konservatoriai valstiečiams nusileido net 11%.  Biržuose socialdemokratų kandidatas buvo pirmas vienmandatėje, bet socialdemokratai net 9 procentais nusileido jo konkurento partijai daugiamandatėje.
 
 Priskiriam pergalę tam kandidatui, kurio vienmandatėje buvo antras, bet jo partija surinko daugiau balsų daugiamandatėje, priešingu atveju paliekam pergalę vienmandatę laimėjusiam kandidatui
 ```{r echo = FALSE, results = 'asis'}
 suppressMessages(library(tidyr))
-lm3<- duod %>% separate("duetas",c("pirmas","antras"),sep = "-") %>% 
+pqlm<- duod %>% separate("duetas",c("pirmas","antras"),sep = "-") %>% 
     mutate(laimejo = ifelse(dm_skirtumas<0,antras,pirmas))
-lm3 %>% kable
+pqlm %>% kable
 ```
 
 Dabar belieka sujungti šituos duomenis su likusiom kitom apygardom, ir suvesti rezultatus
 ```{r echo = FALSE, results = 'asis'}
 lmf <-duo %>% separate("duetas",c("laimejo","pralaimejo"),sep = "-")
-lmf1 <- lmf %>% filter(!(apygardos_nr %in% lm3$apygardos_no)) %>% select(-pralaimejo)
-lm4 <- lmf1 %>% bind_rows(lm3 %>%
+lmf1 <- lmf %>% filter(!(apygardos_nr %in% pqlm$apygardos_no)) %>% select(-pralaimejo)
+lmf3 <- lmf1 %>% bind_rows(pqlm %>%
                               select(apygardos_nr=apygardos_no,laimejo,skirtumas=vm_skirtumas))
-lm5 <- lm4 %>% group_by(laimejo) %>% summarize(mandatai=n()) %>% arrange(-mandatai)
+lm3 <- lmf3 %>% group_by(laimejo) %>% summarize(mandatai=n()) %>% arrange(-mandatai)
+
+lm1 <- lmf %>% group_by(laimejo) %>% summarize(mandatai=n()) %>% arrange(-mandatai)
                           
-lm5 %>% kable                         
+lm3 %>% kable                         
 ```
+
+Palyginam su pirmąja prognoze, kurioje vienmandatę antrame ture laimi tas, kuris laimėjo pirmame:
+
+```{r echo = FALSE, results = 'asis'}
+lmj1 <- lm1 %>% rename(lyderis = mandatai) %>% left_join(lm3 %>% rename(pretendentas = mandatai), by="laimejo") %>% mutate(pretendentas = ifelse(is.na(pretendentas),0,pretendentas))
+lmj1 %>% kable 
+```
+
+Pridedam daugiamandačių rezultatus ir turime tokį galimą vaizdą Seime:
+```{r echo= FALSE, results = 'asis'}
+dmr <- read.csv2("csv_data/daugiamandaciu_rezultatai.csv", stringsAsFactors = FALSE) %>% select(partija, mandatai) %>% mutate(mandatai = ifelse(is.na(mandatai),0,mandatai))
+
+res<-lmj1 %>% rename(partija=laimejo) %>% left_join(dmr %>% rename(daugiamandate = mandatai), by = "partija" ) %>% 
+    mutate(daugiamandate = ifelse(is.na(daugiamandate),0, daugiamandate)) %>% 
+    mutate(lyderis = daugiamandate + lyderis, pretendentas = pretendentas + daugiamandate) %>% select(-daugiamandate)
+
+res %>% kable
+```
+
+Matome kad pirmuoju atveju valstiečiai su socdemais ir lenkais turi minimalią daugumą Seime. Ouch. Abiem atvejais konservatoriams be valstiečių niekaip neišeina surinkti daugumos į koaliciją nepaimant tvarkiečių arba socdemų. Ramzio žudikai gali netyčia tapti kingmakeriais. Bet kuriuo atveju konservatoriai kartu su valstiečiais gali paimti Seimą be jokios pagalbos ir be normalios opozicijos. Bus įdomu.

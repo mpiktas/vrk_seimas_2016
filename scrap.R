@@ -27,3 +27,14 @@ dapl1 <- dapl[[3]] %>% html_nodes("a") %>% html_attrs() %>%
 }) %>% do.call("c",.)
 
 writeLines(dapl1,"link_data/dm_apygardu_linkai.txt")
+
+dmr <-  dapl[[2]] %>%  html_table(fill = TRUE) %>% format_dm_main_table
+colnames(dmr) <- c("partijos_no","partija","apylinkes","pastas","balsai","proc_rinkejai","mandatai")
+dmr <- dmr %>% filter(partijos_no!="")  %>% 
+    mutate(partijos_no = as.integer(partijos_no), mandatai = as.integer(mandatai)) %>%
+    inner_join(pnames2 %>% select(partijos_no,partija1), by = "partijos_no") %>% 
+    rename(partija_full = partija) %>% rename(partija = partija1) 
+
+dmr %>% write.csv2("csv_data/daugiamandaciu_rezultatai.csv", row.names = FALSE)
+    
+    c("partijos_no","partija","apylinkes","pastas","balsai","proc_rinkejai","proc_rinkejai_lt","apygarda")

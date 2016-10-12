@@ -66,9 +66,9 @@ ff <- read_html(dmapygf[1], encoding = "utf-8")
 
 dmvapy <- dmapygf %>% lapply(get_data, atag="h2") 
 
-format_dm_main_table <- function(x) {
-    hd <- x[1,-3]
-    res<-x[-1,-3]
+format_dm_main_table <- function(x,rem=3) {
+    hd <- x[1,-rem]
+    res<-x[-1,-rem]
     colnames(res)<-hd
     res
 }
@@ -92,7 +92,6 @@ dm2 <- dm1 %>% separate(apygarda, c("apygarda", "Numeris"),sep="[(]")  %>%
     rename(partija_full = partija) %>% rename(partija = partija1)
 
     
-
 
 dm2 %>% write.csv2(file="csv_data/daugiamandaciu_apygardu_rinkimu_rezultatai.csv", row.names= FALSE)
 
