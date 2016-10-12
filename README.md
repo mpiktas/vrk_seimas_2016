@@ -1,6 +1,6 @@
 # 2016 metų Seimo rinkimai
 
-Iš VRK nuscrapinti duomenys. Vienmandačių ir daugiamandačių apygardų rezultatai. Apylinkės yra tik daugiamandatės ir tik originalai, dar nesutvarkyti.
+Iš VRK nuscrapinti duomenys. Vienmandačių ir daugiamandačių apygardų rezultatai. Apylinkės yra tik vienmandatės.
 
   1. Vienmandatės apygardos, [rinkimų rezultatai.](http://https://raw.githubusercontent.com/mpiktas/vrk_seimas_2016/master/csv_data/Apygardu_rinkimu_rezultatai.csv)
   
